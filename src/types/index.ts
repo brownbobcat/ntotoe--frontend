@@ -35,4 +35,7 @@ export interface AuthContextType {
   logout: () => void;
   error: string | null;
   setError: (error: string | null) => void;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (token: string, password: string) => Promise<void>;
+  updateProfile: (userData: Partial<UserResponse>) => Promise<void>;
 }

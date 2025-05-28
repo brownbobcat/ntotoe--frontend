@@ -7,6 +7,10 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
+import OrganizationsPage from "./pages/OrganizationsPage";
+import BoardsPage from "./pages/BoardsPage";
+import OrganizationSettingsPage from "./pages/OrganizationSettingsPage";
+import BoardViewPage from "./components/BoardViewPage";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -77,6 +81,39 @@ const AppWithRouter: React.FC = () => {
             element={
               <ProtectedRoute>
                 <HomePage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/organizations"
+            element={
+              <ProtectedRoute>
+                <OrganizationsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:organizationId"
+            element={
+              <ProtectedRoute>
+                <BoardsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:organizationId/settings"
+            element={
+              <ProtectedRoute>
+                <OrganizationSettingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/boards/:boardId"
+            element={
+              <ProtectedRoute>
+                <BoardViewPage />
               </ProtectedRoute>
             }
           />

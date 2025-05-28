@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import React, {
   createContext,
   useState,
@@ -13,6 +14,8 @@ import {
   AuthContextType,
 } from "@/types";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "@/lib/constants";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -83,6 +86,54 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     navigate("/login");
   };
 
+  const forgotPassword = async (email: string): Promise<void> => {
+    try {
+      await axios.post(`${API_URL}/api/auth/forgot-password`, { email });
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const resetPassword = async (
+    token: string,
+    password: string
+  ): Promise<void> => {
+    try {
+      await axios.post(`${API_URL}/api/auth/reset-password`, {
+        token,
+        password,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const updateProfile = async (
+    userData: Partial<UserResponse>
+  ): Promise<void> => {
+    try {
+      const response = await axios.put(
+        `${API_URL}/api/auth/profile`,
+        userData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      const updatedUser = response.data;
+
+      // Update localStorage
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+
+      // Update state
+      setUser(updatedUser);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -93,6 +144,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         logout,
         error,
         setError,
+        forgotPassword,
+        resetPassword,
+        updateProfile,
       }}
     >
       {children}
