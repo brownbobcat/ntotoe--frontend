@@ -26,7 +26,7 @@ import { API_URL } from "@/lib/constants";
 import axios from "axios";
 import { Filter, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
 import { useParams } from "react-router-dom";
 import CreateColumnForm from "./CreateColumnForm";
 import TaskColumn from "./TaskColumn";
