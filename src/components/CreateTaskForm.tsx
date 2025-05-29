@@ -33,7 +33,6 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   const [priority, setPriority] = useState("medium");
   const [assignee, setAssignee] = useState("unassigned");
   const [users, setUsers] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchUsers();

@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { DragDropContext } from "react-beautiful-dnd";
-import { Search, X, Filter, ChevronDown } from "lucide-react";
-import axios from "axios";
-import { useAuth } from "@/contexts/AuthContext";
+import CreateTaskForm from "@/components/CreateTaskForm";
+import EditTaskForm from "@/components/EditTaskForm";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -17,31 +13,32 @@ import {
 } from "@/components/ui/dialog";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import CreateTaskForm from "@/components/CreateTaskForm";
-import EditTaskForm from "@/components/EditTaskForm";
-import TaskColumn from "./TaskColumn";
+import { Input } from "@/components/ui/input";
 import { API_URL } from "@/lib/constants";
+import axios from "axios";
+import { Filter, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import { useParams } from "react-router-dom";
 import CreateColumnForm from "./CreateColumnForm";
+import TaskColumn from "./TaskColumn";
 
 const BoardViewPage = () => {
   const { boardId } = useParams();
-  const navigate = useNavigate();
-  const { user } = useAuth();
 
   const [board, setBoard] = useState<any>(null);
   const [columns, setColumns] = useState<any[]>([]);
   const [filteredColumns, setFilteredColumns] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSilentLoading, setIsSilentLoading] = useState(false);
+  const [, setIsSilentLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [showCreateColumn, setShowCreateColumn] = useState(false);
